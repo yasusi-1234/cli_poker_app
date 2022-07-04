@@ -140,7 +140,12 @@ public enum PokerHand {
     NO_HAND(0, "ノーハンド"){
         @Override
         public boolean isThisHand(List<Card> cards) {
-            return true;
+            Set<Integer> cardNumbers = cards.stream()
+                    .map(Card::getCardNumber)
+                    .collect(Collectors.toSet());
+            return cardNumbers.size() == 5
+                    && !FLASH.isThisHand(cards)
+                    && !STRAIGHT.isThisHand(cards);
         }
     };
 
