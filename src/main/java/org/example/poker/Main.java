@@ -1,7 +1,12 @@
 package org.example.poker;
 
+import org.example.poker.central.PokerGameSystem;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        PokerGameSystem gameSystem = new PokerGameSystem();
+        gameSystem.gamePlay();
+
     }
 }
