@@ -61,16 +61,16 @@ public class PokerPrinter {
         printOuterFrame();
         System.out.println();
 
-        System.out.println("残したいカードを選んでください 入力例) 13 <=この場合、左から1番目,3番目のカードを残します");
+        System.out.println("捨てたいカードを選んでください 入力例) 13 <=この場合、左から1番目,3番目のカードが捨てられます");
     }
 
     /**
      * ユーザーの取捨選択状況を表示する
      *
      * @param cards ユーザーが所持しているカード
-     * @param dropIndexes ユーザーが選択した保持するカードインデックスセット
+     * @param holdIndexes ユーザーが選択した保持するカードインデックスセット
      */
-    public void printUserCardsSelection(List<Card> cards, Set<Integer> dropIndexes) {
+    public void printUserCardsSelection(List<Card> cards, Set<Integer> holdIndexes) {
         System.out.println();
 
         printOuterFrame();
@@ -83,7 +83,7 @@ public class PokerPrinter {
 
         System.out.println();
 
-        printHoldAndDrop(dropIndexes);
+        printHoldAndDrop(holdIndexes);
         System.out.println();
 
         printOuterFrame();
@@ -117,7 +117,7 @@ public class PokerPrinter {
         printContinue();
     }
 
-    public void printContinue() {
+    private void printContinue() {
         System.out.println("ゲームを続けますか？ (y/n) y or enter => 続行, n => 終了");
         System.out.println("あなたのステータスを確認するには => s");
     }
@@ -132,18 +132,18 @@ public class PokerPrinter {
         printCardFrameTopOrBottom();
     }
 
-    private void printHoldAndDrop(Set<Integer> numberIndexes) {
+    private void printHoldAndDrop(Set<Integer> dropIndexes) {
         StringBuilder sb = new StringBuilder("      "); // スペース6文字
         String hold = "HOLD";
         String drop = "DROP";
         String characterSpaces = "          ";
 
         for (int i = 0; i < 5; i++) {
-            if (numberIndexes.contains(i + 1)){
-                sb.append(hold);
+            if (dropIndexes.contains(i)){
+                sb.append(drop);
                 sb.append(characterSpaces); // スペース10文字
             }else {
-                sb.append(drop);
+                sb.append(hold);
                 sb.append(characterSpaces);
             }
         }
