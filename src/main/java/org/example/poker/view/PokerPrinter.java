@@ -2,8 +2,10 @@ package org.example.poker.view;
 
 import org.apache.commons.lang3.StringUtils;
 import org.example.poker.model.Card;
+import org.example.poker.service.PokerHand;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,10 +19,35 @@ public class PokerPrinter {
 
     private static final String BR = System.lineSeparator();
 
-    public void printUserScore() {
+    /**
+     * ユーザーのステータスを表示する
+     * @param pokerResultMap ユーザーのこれまでの上がり役の結果
+     * @param score ユーザーのトータルスコア
+     */
+    public void printUserScore(Map<PokerHand, Integer> pokerResultMap, int score) {
 
+        System.out.println();
+        printOuterFrame();
+        System.out.println();
+
+        System.out.println(" あんたのTotal Score: " + score + " てん!!");
+        System.out.println();
+
+        pokerResultMap.entrySet().forEach(entry ->
+                System.out.println(" " + entry.getKey().getHandName() + " : "
+                + entry.getValue() + " 回"));
+
+        System.out.println();
+        printOuterFrame();
+        System.out.println();
+
+        printContinue();
     }
 
+    /**
+     * ユーザーに配られたカード情報を表示する
+     * @param cards ユーザーが保持しているカード
+     */
     public void printUserCards(List<Card> cards) {
         System.out.println();
         printOuterFrame();
@@ -33,8 +60,16 @@ public class PokerPrinter {
         System.out.println();
         printOuterFrame();
         System.out.println();
+
+        System.out.println("残したいカードを選んでください 入力例) 13 <=この場合、左から1番目,3番目のカードを残します");
     }
 
+    /**
+     * ユーザーの取捨選択状況を表示する
+     *
+     * @param cards ユーザーが所持しているカード
+     * @param dropIndexes ユーザーが選択した保持するカードインデックスセット
+     */
     public void printUserCardsSelection(List<Card> cards, Set<Integer> dropIndexes) {
         System.out.println();
 
@@ -54,6 +89,37 @@ public class PokerPrinter {
         printOuterFrame();
 
         System.out.println();
+
+        System.out.println("上記状態で宜しいですか？ (y/n) y or enter => ゲーム進行, n => やり直し");
+    }
+
+    /**
+     * ゲームの結果を表示する
+     *
+     * @param cards ユーザーの保持するカード
+     * @param msg 何らかのゲームシステムからのメッセージ
+     */
+    public void printUserCardsResult(List<Card> cards, String msg) {
+        System.out.println();
+        printOuterFrame();
+        System.out.println();
+        System.out.println("結果");
+        System.out.println();
+        System.out.println(msg);
+        System.out.println();
+
+        printUserCardsInner(cards);
+
+        System.out.println();
+        printOuterFrame();
+        System.out.println();
+
+        printContinue();
+    }
+
+    public void printContinue() {
+        System.out.println("ゲームを続けますか？ (y/n) y or enter => 続行, n => 終了");
+        System.out.println("あなたのステータスを確認するには => s");
     }
 
     private void printUserCardsInner(List<Card> cards) {
