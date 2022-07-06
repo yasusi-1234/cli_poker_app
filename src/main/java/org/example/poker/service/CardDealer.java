@@ -4,7 +4,6 @@ import org.example.poker.model.Card;
 import org.example.poker.model.CardType;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -65,13 +64,31 @@ public class CardDealer {
 
     /**
      * ユーザーが取捨選択した後に配る事を想定したメソッド
-     * dealCount分のカード枚数分のカードをリスト型で返却する
-     * 初回引いた分の次の要素から配列を選択している
-     * @param dealCount 必要枚数
+     * dropIndexesのサイズ分の新たに配るカードを抽出し
+     * dropIndexesに格納されているインデックスに新たに配るカードをセットし
+     * 返却する
+     *
+     * @param playerCards プレイヤーのカード
+     * @param dropIndexes 捨てたいインデックス値のセット
      * @return 必要枚数分のカードリスト
      */
-    public List<Card> distributeCards(int dealCount) {
-        return new ArrayList<>(allCards.subList(FIRST_DEAL_COUNT, FIRST_DEAL_COUNT + dealCount));
+    public List<Card> distributeCards(List<Card> playerCards, Set<Integer> dropIndexes) {
+        int dealCount = dropIndexes.size();
+
+        if (dealCount == 0){
+            return playerCards;
+        }
+
+        List<Card> dealCards = new ArrayList<>(allCards.subList(FIRST_DEAL_COUNT, FIRST_DEAL_COUNT + dealCount));
+
+        List<Card> returnCards = new ArrayList<>(playerCards);
+
+        int counter = 0;
+        for(Integer changeIndex : dropIndexes){
+            returnCards.set(changeIndex, dealCards.get(counter));
+            counter++;
+        }
+        return returnCards;
     }
 
     public List<Card> getAllCards() {
