@@ -59,7 +59,7 @@ public class CardDealer {
      * @return allCardsから5個抜き出したカードの配列
      */
     public List<Card> firstDistributeCards() {
-        dealCards = allCards.subList(0, FIRST_DEAL_COUNT);
+        dealCards = new ArrayList<>(allCards.subList(0, FIRST_DEAL_COUNT));
         return dealCards;
     }
 
@@ -71,7 +71,7 @@ public class CardDealer {
      * @return 必要枚数分のカードリスト
      */
     public List<Card> distributeCards(int dealCount) {
-        return allCards.subList(FIRST_DEAL_COUNT, FIRST_DEAL_COUNT + dealCount);
+        return new ArrayList<>(allCards.subList(FIRST_DEAL_COUNT, FIRST_DEAL_COUNT + dealCount));
     }
 
     public List<Card> getAllCards() {
