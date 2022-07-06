@@ -111,6 +111,10 @@ public class PokerPlayer {
         return score;
     }
 
+    public EnumMap<PokerHand, Integer> getPokerResultMap() {
+        return pokerResultMap;
+    }
+
     public void setCards(List<Card> cards) {
         this.cards = cards;
     }
