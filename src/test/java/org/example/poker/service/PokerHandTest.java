@@ -19,21 +19,40 @@ import static org.junit.jupiter.api.Assertions.*;
  * @version 1.0
  */
 class PokerHandTest {
+    @DisplayName("ロイヤルストレートフラッシュのテスト")
+    @Nested
+    class RoyalStraightFlash {
+        @DisplayName("ロイヤルストレートフラッシュと認識される")
+        @Test
+        void isThisHandOfROYAL_STRAIGHT_FLASH() {
+            List<Card> cards = Arrays.asList(
+                    new Card(10, CardType.CLUB),
+                    new Card(12, CardType.CLUB),
+                    new Card(13, CardType.CLUB),
+                    new Card(11, CardType.CLUB),
+                    new Card(1, CardType.CLUB)
+            );
 
-    @DisplayName("ロイヤルストレートフラッシュと認識される")
-    @Test
-    void isThisHandOfROYAL_STRAIGHT_FLASH() {
-        List<Card> cards = Arrays.asList(
-                new Card(10, CardType.CLUB),
-                new Card(12, CardType.CLUB),
-                new Card(13, CardType.CLUB),
-                new Card(11, CardType.CLUB),
-                new Card(1, CardType.CLUB)
-        );
+            boolean actual = ROYAL_STRAIGHT_FLASH.isThisHand(cards);
 
-        boolean actual = ROYAL_STRAIGHT_FLASH.isThisHand(cards);
+            assertTrue(actual);
+        }
+        @DisplayName("ロイヤルストレートフラッシュと認識されない")
+        @Test
+        void isNotThisHand() {
+            List<Card> cards = Arrays.asList(
+                    new Card(5, CardType.CLUB),
+                    new Card(4, CardType.CLUB),
+                    new Card(3, CardType.CLUB),
+                    new Card(2, CardType.CLUB),
+                    new Card(1, CardType.CLUB)
+            );
 
-        assertTrue(actual);
+            boolean actual = ROYAL_STRAIGHT_FLASH.isThisHand(cards);
+
+            assertFalse(actual);
+        }
+
     }
 
     @DisplayName("ストレートフラッシュと認識される")
