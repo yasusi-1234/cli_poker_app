@@ -24,11 +24,6 @@ public class CardDealer {
     private final List<Card> allCards;
 
     /**
-     * 初回に配ったカードを記憶する領域
-     */
-    private List<Card> dealCards;
-
-    /**
      * コンストラクタ
      */
     public CardDealer() {
@@ -58,8 +53,7 @@ public class CardDealer {
      * @return allCardsから5個抜き出したカードの配列
      */
     public List<Card> firstDistributeCards() {
-        dealCards = new ArrayList<>(allCards.subList(0, FIRST_DEAL_COUNT));
-        return dealCards;
+        return new ArrayList<>(allCards.subList(0, FIRST_DEAL_COUNT));
     }
 
     /**
@@ -95,20 +89,16 @@ public class CardDealer {
         return allCards;
     }
 
-    public List<Card> getDealCards() {
-        return dealCards;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CardDealer that = (CardDealer) o;
-        return allCards.equals(that.allCards) && dealCards.equals(that.dealCards);
+        return Objects.equals(allCards, that.allCards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(allCards, dealCards);
+        return Objects.hash(allCards);
     }
 }
