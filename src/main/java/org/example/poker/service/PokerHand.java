@@ -22,8 +22,10 @@ public enum PokerHand {
                             .collect(Collectors.toList());
 
             int firstCardNum = cardNumbers.get(0);
+            int secondCardNum = cardNumbers.get(1);
 
             return firstCardNum == 1
+                    && secondCardNum != 2
                     && PokerHand.STRAIGHT_FLASH.isThisHand(cards);
         }
     },
