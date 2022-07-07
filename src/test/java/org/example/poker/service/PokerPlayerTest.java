@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import static org.example.poker.service.PlayerResponse.*;
 import static org.example.poker.service.PokerHand.*;
@@ -60,9 +59,9 @@ class PokerPlayerTest {
             // 初期値の期待値
             int expectedNum = 0;
 
-            actual.entrySet().forEach(act -> {
+            actual.forEach((key, value) -> {
                 // actual一要素のkeyに対応するvalue
-                int actualNum = act.getValue();
+                int actualNum = value;
                 assertEquals(expectedNum, actualNum);
             });
         }
