@@ -1,6 +1,6 @@
 package org.example.poker.service;
 
-import org.example.poker.model.Card;;
+import org.example.poker.model.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * {@link CardDealer}クラスのテスト
+ *
  * @author yasu
  * @version 1.0
  */
@@ -97,11 +98,12 @@ class CardDealerTest {
             List<Card> actual = cardDealer.distributeCards(dealCards, dropIndexes);
 
             // 変更されたくないインデックス 1, 3
-            List<Integer> expectedNotChangeIndexes = Arrays.asList(1,3);
+            List<Integer> expectedNotChangeIndexes = Arrays.asList(1, 3);
 
-            expectedNotChangeIndexes.forEach(expectIndex -> {
-                assertEquals(dealCards.get(expectIndex), actual.get(expectIndex));
-            });
+            expectedNotChangeIndexes
+                    .forEach(expectIndex ->
+                            assertEquals(dealCards.get(expectIndex),
+                                    actual.get(expectIndex)));
 
         }
     }
