@@ -22,8 +22,10 @@ public enum PokerHand {
                             .collect(Collectors.toList());
 
             int firstCardNum = cardNumbers.get(0);
+            int secondCardNum = cardNumbers.get(1);
 
             return firstCardNum == 1
+                    && secondCardNum != 2
                     && PokerHand.STRAIGHT_FLASH.isThisHand(cards);
         }
     },
@@ -42,7 +44,7 @@ public enum PokerHand {
                             .collect(Collectors.groupingBy(Card::getCardNumber,
                                     Collectors.counting()));
 
-            int carsMapSize = cards.size();
+            int carsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
                     .orElse(0L);
 
@@ -57,7 +59,7 @@ public enum PokerHand {
                             .collect(Collectors.groupingBy(Card::getCardNumber,
                                     Collectors.counting()));
 
-            int carsMapSize = cards.size();
+            int carsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
                     .orElse(0L);
 
@@ -105,7 +107,7 @@ public enum PokerHand {
                             .collect(Collectors.groupingBy(Card::getCardNumber,
                                     Collectors.counting()));
 
-            int carsMapSize = cards.size();
+            int carsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
                     .orElse(0L);
 
@@ -120,11 +122,11 @@ public enum PokerHand {
                             .collect(Collectors.groupingBy(Card::getCardNumber,
                                     Collectors.counting()));
 
-            int carsMapSize = cards.size();
+            int cardsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
                     .orElse(0L);
 
-            return carsMapSize == 3 && cardsMapValueMax == 2;
+            return cardsMapSize == 3 && cardsMapValueMax == 2;
         }
     },
     ONE_PAIR(5, "ワンペア"){
