@@ -6,6 +6,7 @@ group 'org.example'
 version '1.0'
 mainClassName='org.example.poker.Main'
 sourceCompatibility=11
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
