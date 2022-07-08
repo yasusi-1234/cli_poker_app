@@ -12,8 +12,19 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.6.1'
+
+    // https://mvnrepository.com/artifact/org.powermock/powermock-reflect
+    testImplementation 'org.powermock:powermock-reflect:2.0.9'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
 test {
@@ -22,4 +33,10 @@ test {
 
 jar {
     manifest.attributes('Main-Class': 'org.example.poker.Main')
+}
+
+tasks {
+    run {
+        standardInput = System.in
+    }
 }
