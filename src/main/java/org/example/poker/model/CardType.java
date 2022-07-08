@@ -6,7 +6,7 @@ package org.example.poker.model;
  * カードのマークを表現するクラス
  */
 public enum CardType {
-    SPADE("♠"), HEART("♥"), CLUB("♣"), DIAMOND("♦");
+    SPADE("S"), HEART("H"), CLUB("C"), DIAMOND("D");
 
     CardType(String cardMark) {
         this.cardMark = cardMark;
