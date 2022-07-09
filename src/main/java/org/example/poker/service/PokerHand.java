@@ -13,13 +13,10 @@ import java.util.stream.IntStream;
  * ポーカーの手役を現すクラス
  */
 public enum PokerHand {
-    ROYAL_STRAIGHT_FLASH(1000, "ロイヤルストレートフラッシュ"){
+    ROYAL_STRAIGHT_FLASH(1000, "ロイヤルストレートフラッシュ") {
         @Override
         public boolean isThisHand(List<Card> cards) {
-            List<Integer> cardNumbers =
-                    cards.stream().map(Card::getCardNumber)
-                            .sorted()
-                            .collect(Collectors.toList());
+            List<Integer> cardNumbers = getCardsNumberSortedList(cards);
 
             int firstCardNum = cardNumbers.get(0);
             int secondCardNum = cardNumbers.get(1);
@@ -29,35 +26,31 @@ public enum PokerHand {
                     && PokerHand.STRAIGHT_FLASH.isThisHand(cards);
         }
     },
-    STRAIGHT_FLASH(500, "ストレートフラッシュ"){
+    STRAIGHT_FLASH(500, "ストレートフラッシュ") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             return PokerHand.STRAIGHT.isThisHand(cards)
                     && PokerHand.FLASH.isThisHand(cards);
         }
     },
-    FOUR_CARDS(250, "フォーカード"){
+    FOUR_CARDS(250, "フォーカード") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             Map<Integer, Long> cardsMap =
-                    cards.stream()
-                            .collect(Collectors.groupingBy(Card::getCardNumber,
-                                    Collectors.counting()));
+                    getCardsNumberGroupMap(cards);
 
             int carsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
                     .orElse(0L);
 
-            return carsMapSize == 2 && cardsMapValueMax == 4;
+            return cardsMapValueMax == 4;
         }
     },
-    FULL_HOUSE(125, "フルハウス"){
+    FULL_HOUSE(125, "フルハウス") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             Map<Integer, Long> cardsMap =
-                    cards.stream()
-                            .collect(Collectors.groupingBy(Card::getCardNumber,
-                                    Collectors.counting()));
+                    getCardsNumberGroupMap(cards);
 
             int carsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
@@ -67,7 +60,7 @@ public enum PokerHand {
 
         }
     },
-    FLASH(75, "フラッシュ"){
+    FLASH(75, "フラッシュ") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             CardType firstCardType = cards.get(0).getCardType();
@@ -76,19 +69,17 @@ public enum PokerHand {
                     .allMatch(cardType -> Objects.equals(cardType, firstCardType));
         }
     },
-    STRAIGHT(50, "ストレート"){
+    STRAIGHT(50, "ストレート") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             // 1, 10, 11, 12, 13 this is straight
             // 1, 2, 3, 4, 5 this is straight
             // 1, 2, 11, 12, 13 this is not straight
-            List<Integer> cardNumbers = cards.stream().map(Card::getCardNumber)
-                    .sorted()
-                    .collect(Collectors.toList());
+            List<Integer> cardNumbers = getCardsNumberSortedList(cards);
 
             List<Integer> oneToTen = Arrays.asList(1, 10, 11, 12, 13);
 
-            if(Objects.equals(cardNumbers, oneToTen)){
+            if (Objects.equals(cardNumbers, oneToTen)) {
                 return true;
             }
 
@@ -99,13 +90,11 @@ public enum PokerHand {
             return Objects.equals(cardNumbers, serialNumbers);
         }
     },
-    THREE_CARDS(25, "スリーカード"){
+    THREE_CARDS(25, "スリーカード") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             Map<Integer, Long> cardsMap =
-                    cards.stream()
-                            .collect(Collectors.groupingBy(Card::getCardNumber,
-                                    Collectors.counting()));
+                    getCardsNumberGroupMap(cards);
 
             int carsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
@@ -114,13 +103,11 @@ public enum PokerHand {
             return carsMapSize == 3 && cardsMapValueMax == 3;
         }
     },
-    TWO_PAIR(10, "ツーペア"){
+    TWO_PAIR(10, "ツーペア") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             Map<Integer, Long> cardsMap =
-                    cards.stream()
-                            .collect(Collectors.groupingBy(Card::getCardNumber,
-                                    Collectors.counting()));
+                    getCardsNumberGroupMap(cards);
 
             int cardsMapSize = cardsMap.size();
             long cardsMapValueMax = cardsMap.values().stream().max(Long::compareTo)
@@ -129,7 +116,7 @@ public enum PokerHand {
             return cardsMapSize == 3 && cardsMapValueMax == 2;
         }
     },
-    ONE_PAIR(5, "ワンペア"){
+    ONE_PAIR(5, "ワンペア") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             Set<Integer> cardNumbers = cards.stream()
@@ -139,7 +126,7 @@ public enum PokerHand {
             return cardNumbers.size() == 4;
         }
     },
-    NO_HAND(0, "ノーハンド"){
+    NO_HAND(0, "ノーハンド") {
         @Override
         public boolean isThisHand(List<Card> cards) {
             Set<Integer> cardNumbers = cards.stream()
@@ -167,7 +154,6 @@ public enum PokerHand {
     private final String handName;
 
     /**
-     *
      * @param cards カードリスト(5枚)を想定
      * @return カードの役が一致しているか
      */
@@ -180,4 +166,32 @@ public enum PokerHand {
     public String getHandName() {
         return handName;
     }
+
+    /**
+     * カードをカードの番号ごとにグループ化し返却
+     * key: カードのナンバー
+     * value: カードのナンバーの見つかった数量
+     * example) list(1, 1, 3, 3, 4) -> map{key:1 value: 2, key:3 value:2, key:4 value:1}
+     * @param cards カードリスト
+     * @return
+     */
+    protected Map<Integer, Long> getCardsNumberGroupMap(List<Card> cards) {
+        return cards.stream()
+                .collect(Collectors.groupingBy(Card::getCardNumber,
+                        Collectors.counting()));
+    }
+
+    /**
+     * カード型のリストを数値でソートして返却
+     *
+     * @param cards カードリスト
+     * @return カードの数値のソートリスト
+     */
+    protected List<Integer> getCardsNumberSortedList(List<Card> cards) {
+        return cards.stream().map(Card::getCardNumber)
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+
 }
