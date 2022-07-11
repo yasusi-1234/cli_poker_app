@@ -38,6 +38,7 @@ public class PokerPlayer {
      */
     public PokerPlayer() {
         this.score = 0;
+        this.gameCount = 0;
         // pokerResultMapの初期化
         pokerResultMap = new EnumMap<>(PokerHand.class);
         Arrays.asList(PokerHand.values()).forEach(hand -> pokerResultMap.put(hand, 0));
