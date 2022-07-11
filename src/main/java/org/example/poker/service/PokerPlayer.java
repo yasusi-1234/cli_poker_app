@@ -17,6 +17,12 @@ public class PokerPlayer {
      * プレイヤーのスコア
      */
     private int score;
+
+    /**
+     * プレイヤーのゲーム回数
+     */
+    private int gameCount;
+
     /**
      * プレイヤーのカード
      */
@@ -32,6 +38,7 @@ public class PokerPlayer {
      */
     public PokerPlayer() {
         this.score = 0;
+        this.gameCount = 0;
         // pokerResultMapの初期化
         pokerResultMap = new EnumMap<>(PokerHand.class);
         Arrays.asList(PokerHand.values()).forEach(hand -> pokerResultMap.put(hand, 0));
@@ -100,6 +107,15 @@ public class PokerPlayer {
     }
 
     /**
+     * ユーザーのゲーム回数を1増やす
+     * @return 増やされた後のゲーム回数
+     */
+    public int addGameCount(){
+        gameCount++;
+        return gameCount;
+    }
+
+    /**
      * ポーカーの上がり役を追加する
      * @param pokerHand 上がったポーカー役
      */
@@ -109,6 +125,10 @@ public class PokerPlayer {
 
     public int getScore() {
         return score;
+    }
+
+    public int getGameCount() {
+        return gameCount;
     }
 
     public EnumMap<PokerHand, Integer> getPokerResultMap() {
