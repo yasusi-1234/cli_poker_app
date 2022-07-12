@@ -29,6 +29,11 @@ public class PokerPlayer {
     private List<Card> cards;
 
     /**
+     * プレイヤーが選んだ捨てるカードのIndexセット
+     */
+    private Set<Integer> dropCards;
+
+    /**
      * プレイヤーのポーカー上がり役の記録
      */
     private final EnumMap<PokerHand, Integer> pokerResultMap;
@@ -45,7 +50,8 @@ public class PokerPlayer {
     }
 
     /**
-     * プレイヤーが選択したカードのインデックスをSet化して返却する
+     * プレイヤーが選択したカードのインデックスをSet化してフィールドの
+     * dropCardsにセットし返却する
      *
      * @return プレイヤーが選択したカードインデックス
      */
@@ -55,13 +61,14 @@ public class PokerPlayer {
         List<String> filterList = Arrays.asList("1", "2", "3", "4", "5");
         // 入力された文字列
         String inputValue = sc.nextLine();
-        Set<Integer> valueSet = Arrays.stream(inputValue.split(""))
+        dropCards = Arrays.stream(inputValue.split(""))
                 .distinct()
                 .filter(filterList::contains)
                 .map(val -> Integer.parseInt(val) - 1)
                 .collect(Collectors.toSet());
 
-        return valueSet;
+
+        return dropCards;
     }
 
     /**
@@ -141,5 +148,9 @@ public class PokerPlayer {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public Set<Integer> getDropCards() {
+        return dropCards;
     }
 }
