@@ -4,6 +4,12 @@ import org.example.poker.central.PokerGameSystem;
 import org.example.poker.service.PokerPlayer;
 import org.example.poker.view.PokerPrinter;
 
+/**
+ * ポーカーゲームのプレイヤーに捨てるカードを選んでもらう処理を表現したクラス
+ *
+ * @author yasu
+ * @version 1.0
+ */
 public class DropChoice implements GamePhase{
 
     private static final GamePhase singleton = new DropChoice();
@@ -12,6 +18,12 @@ public class DropChoice implements GamePhase{
 
     }
 
+    /**
+     * プレイヤーに初回に配られたカード状況を表示しプレイヤーに捨てるカードを選択
+     * してもらった後に
+     * {@link PokerGameSystem} に {@link DropChoiceCheck} をセットする
+     * @param pokerGameSystem {@link PokerGameSystem} ゲームシステム
+     */
     @Override
     public void advanceGame(PokerGameSystem pokerGameSystem) {
         PokerPlayer player = pokerGameSystem.getPokerPlayer();
