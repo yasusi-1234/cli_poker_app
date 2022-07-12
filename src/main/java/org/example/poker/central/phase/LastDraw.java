@@ -10,12 +10,26 @@ import org.example.poker.view.PokerPrinter;
 
 import java.util.List;
 
+/**
+ * ポーカーゲームの最終結果の処理を表現したクラス
+ *
+ * @author yasu
+ * @version 1.0
+ */
 public class LastDraw implements GamePhase{
 
     private static final GamePhase singleton = new LastDraw();
 
     private LastDraw(){}
 
+    /**
+     * プレイヤーが選んだ捨てるカードに新たにカードをセットし
+     * その結果をプレイヤーの結果に反映させ、画面に表示する
+     * その後は {@link PokerGameSystem} の {@link GamePhase}
+     * に {@link Continue} をセットする
+     *
+     * @param pokerGameSystem {@link PokerGameSystem} ゲームシステム
+     */
     @Override
     public void advanceGame(PokerGameSystem pokerGameSystem) {
         PokerPlayer player = pokerGameSystem.getPokerPlayer();

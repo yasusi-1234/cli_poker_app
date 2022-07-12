@@ -6,12 +6,29 @@ import org.example.poker.service.PlayerResponse;
 import org.example.poker.service.PokerPlayer;
 import org.example.poker.view.PokerPrinter;
 
+/**
+ * ポーカーゲームのゲームを続けるかやめるかステータスを確認するかを表現したクラス
+ *
+ * @author yasu
+ * @version 1.0
+ */
 public class Continue implements GamePhase{
 
     private static final GamePhase singleton = new Continue();
 
     private Continue(){}
 
+    /**
+     * ゲームを続けるかをプレイヤーに確認し
+     * {@link PlayerResponse} の
+     * CONTINUEが返却された場合は {@link PokerGameSystem} の {@link GamePhase}
+     * に {@link FirstDraw} をセット
+     * SHOE_STATUSが返却された場合は プレイヤーにステータスを表示し
+     * GAME_ENDが返却された場合は {@link PokerGameSystem} の {@link GamePhase}
+     * に {@link GameEnd} をセットする
+     *
+     * @param pokerGameSystem {@link PokerGameSystem} ゲームシステム
+     */
     @Override
     public void advanceGame(PokerGameSystem pokerGameSystem) {
         PokerPlayer pokerPlayer = pokerGameSystem.getPokerPlayer();

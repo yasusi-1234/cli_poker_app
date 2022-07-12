@@ -4,6 +4,12 @@ import org.example.poker.central.PokerGameSystem;
 import org.example.poker.service.PokerPlayer;
 import org.example.poker.view.PokerPrinter;
 
+/**
+ * ポーカーゲームのプレイヤーが選んだ捨てるカードか間違いないかを確認する処理を表現したクラス
+ *
+ * @author yasu
+ * @version 1.0
+ */
 public class DropChoiceCheck implements GamePhase {
 
     private static final GamePhase singleton = new DropChoiceCheck();
@@ -11,6 +17,13 @@ public class DropChoiceCheck implements GamePhase {
     private DropChoiceCheck() {
     }
 
+    /**
+     * プレイヤーの取捨状況を表示し間違いないかを確認する
+     * {@link PokerGameSystem} の {@link GamePhase} は
+     * プレイヤーがtrueを返却すると {@link LastDraw} をセットし
+     * プレイヤーがfalseを返却すると {@link DropChoice} をセットする
+     * @param pokerGameSystem {@link PokerGameSystem} ゲームシステム
+     */
     @Override
     public void advanceGame(PokerGameSystem pokerGameSystem) {
         PokerPlayer player = pokerGameSystem.getPokerPlayer();

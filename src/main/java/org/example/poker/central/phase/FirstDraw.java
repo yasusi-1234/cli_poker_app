@@ -5,6 +5,12 @@ import org.example.poker.model.Card;
 
 import java.util.List;
 
+/**
+ * ポーカーゲームのフェーズの初回の処理を表現したクラス
+ *
+ * @author yasu
+ * @version 1.0
+ */
 public class FirstDraw implements GamePhase{
 
     private static final GamePhase singleton = new FirstDraw();
@@ -13,6 +19,11 @@ public class FirstDraw implements GamePhase{
 
     }
 
+    /**
+     * 初回のカードを配りプレイヤーにカードを格納する
+     * その後{@link DropChoice} フェーズを {@link PokerGameSystem} にセットする
+     * @param pokerGameSystem {@link PokerGameSystem} ゲームシステム
+     */
     @Override
     public void advanceGame(PokerGameSystem pokerGameSystem) {
         // 初回のカードを格納
