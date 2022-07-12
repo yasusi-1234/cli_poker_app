@@ -22,12 +22,13 @@ public class PokerPrinter {
      * @param pokerResultMap ユーザーのこれまでの上がり役の結果
      * @param score ユーザーのトータルスコア
      */
-    public void printUserScore(Map<PokerHand, Integer> pokerResultMap, int score) {
+    public void printUserScore(Map<PokerHand, Integer> pokerResultMap, int score, int gameCount) {
 
         System.out.println();
         printOuterFrame();
         System.out.println();
 
+        System.out.println(" あんたのゲームプレイ回数: " + gameCount + " 回");
         System.out.println(" あんたのTotal Score: " + score + " てん!!");
         System.out.println();
 
@@ -97,11 +98,14 @@ public class PokerPrinter {
      * @param cards ユーザーの保持するカード
      * @param msg 何らかのゲームシステムからのメッセージ
      */
-    public void printUserCardsResult(List<Card> cards, String msg) {
+    public void printUserCardsResult(List<Card> cards,
+                                     PokerHand hand,
+                                     String msg) {
         System.out.println();
         printOuterFrame();
         System.out.println();
         System.out.println("結果");
+        System.out.println("上がり役: " + hand.getHandName() + " 得点: " + hand.getScore() + " 点");
         System.out.println();
         System.out.println(msg);
         System.out.println();
