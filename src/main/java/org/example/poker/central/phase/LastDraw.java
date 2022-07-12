@@ -36,7 +36,7 @@ public class LastDraw implements GamePhase{
         player.addGameCount();
         // 結果表示
         pokerPrinter.printUserCardsResult(
-                newPlayerCards, hand, "やったね！");
+                newPlayerCards, hand, getPokerHandMessage(hand));
 
         // コンテニューするかのフェーズに移行
         pokerGameSystem.setGamePhase(Continue.getInstance());
@@ -44,5 +44,26 @@ public class LastDraw implements GamePhase{
 
     public static GamePhase getInstance() {
         return singleton;
+    }
+
+    private String getPokerHandMessage(PokerHand hand) {
+        switch (hand) {
+            case NO_HAND:
+                return "Fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuck!!";
+            case THREE_CARDS:
+            case TWO_PAIR:
+            case ONE_PAIR:
+                return "やるじゃない！！";
+            case FULL_HOUSE:
+            case FLASH:
+            case STRAIGHT:
+                return "これはなかなか！！";
+            case FOUR_CARDS:
+            case STRAIGHT_FLASH:
+            case ROYAL_STRAIGHT_FLASH:
+                return "あんたは神ですか!？";
+            default:
+                return "やったね！！";
+        }
     }
 }
